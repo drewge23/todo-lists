@@ -1,8 +1,9 @@
 import React from 'react';
-import {EmailAuthProvider, getAuth, GoogleAuthProvider,} from "firebase/auth";
+import {EmailAuthProvider, GoogleAuthProvider,} from "firebase/auth";
 import firebase from "firebase/compat/app";
 import * as firebaseui from "firebaseui"
 import {useAuthState} from "react-firebase-hooks/auth";
+import './Auth.css'
 
 function Auth({app}) {
     const firebaseAuth = firebase.auth(app)
