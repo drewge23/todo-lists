@@ -6,6 +6,7 @@ import 'firebase/compat/firestore';
 
 import {useAuthState} from "react-firebase-hooks/auth";
 import Auth from "./auth/Auth";
+import MainScreen from "./components/MainScreen";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAAg4yrkWjbY_mcyIBaL97U8eJApu8Lq0M",
@@ -25,7 +26,8 @@ function App() {
 
     return (
         <div className="App">
-            <Auth app={app} />
+            <Auth app={app} user={user}/>
+            {user && <MainScreen app={app}/>}
             <section>
                 {user ? <div>hi, {user.displayName}</div> : <div>signed out</div>}
             </section>

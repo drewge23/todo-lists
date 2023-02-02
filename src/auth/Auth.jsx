@@ -79,8 +79,8 @@ function Auth({app}) {
     // }
 
     return (
-        <div>
-            <h1>Welcome to My Awesome App</h1>
+        <div style={user && {display: 'none'}}>
+            <h1>Welcome to To-do Lists!</h1>
             <div id="firebaseui-auth-container"></div>
             <div id="loader">Loading...</div>
         </div>
