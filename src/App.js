@@ -28,9 +28,6 @@ function App() {
         <div className="App">
             <Auth app={app} user={user}/>
             {user && <MainScreen app={app}/>}
-            <section>
-                {user ? <div>hi, {user.displayName}</div> : <div>signed out</div>}
-            </section>
         </div>
     );
 }
