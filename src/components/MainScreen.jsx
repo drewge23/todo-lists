@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import './MainScreen.css'
+import s from './mainScreen.module.css'
 
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
@@ -32,11 +32,19 @@ function MainScreen({app}) {
 
             setNewListName('')
         } else {
-            alert('list must have a name!')
+            alert('List must have a name!')
         }
     }
     const deleteList = (id) => {
-        db.collection("lists").doc(id).delete()
+        if (window.confirm('Are you sure you want to delete the list? This action is irreversible'))
+            db.collection("lists").doc(id).delete()
+    }
+    const updateList = (id, newName) => {
+        if (newName !== '') {
+            db.collection("lists").doc(id).update({name: newName})
+        } else {
+            alert('List must have a name!')
+        }
     }
 
     const addTask = (taskName, listId) => {
@@ -57,9 +65,15 @@ function MainScreen({app}) {
             tasks: firebase.firestore.FieldValue.arrayRemove(task)
         });
     }
+    const updateTask = (task, listId, newTask) => {
+        deleteTask(task, listId)
+        db.collection("lists").doc(listId).update({
+            tasks: firebase.firestore.FieldValue.arrayUnion(newTask)
+        });
+    }
 
     return (
-        <div style={{padding: '30px'}}>
+        <div className={s.container}>
             <div>
                 <p>Hi, {auth.currentUser.displayName}!</p>
                 <button type="button" onClick={() => auth.signOut()}>
@@ -70,32 +84,16 @@ function MainScreen({app}) {
                 <img referrerPolicy="no-referrer" src={auth.currentUser.photoURL} alt="sign in"/>}
             <div>
                 <h2>Add a new task-list!</h2>
-                <div style={{
-                    display: 'flex',
-                    gap: '20px',
-                    alignItems: 'center',
-                    flexWrap: 'wrap',
-                }}>
+                <div className={s.listsContainer}>
                     {lists && lists.docs.map(list => <List key={list.id}
                                                            list={list}
                                                            deleteList={deleteList}
+                                                           updateList={updateList}
                                                            addTask={addTask}
                                                            deleteTask={deleteTask}
+                                                           updateTask={updateTask}
                     />)}
-                    <div
-                        style={{
-                            width: '300px',
-                            height: '500px',
-                            borderRadius: '15px',
-                            backgroundColor: 'lightcyan',
-                            outline: '4px dotted red',
-                            outlineOffset: '-2px',
-
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}
-                    >
+                    <div className={s.newListBtn}>
                         {isNewList
                             ? <div>
                                 <label htmlFor="listName">List name</label>
@@ -110,7 +108,7 @@ function MainScreen({app}) {
                                 <button onClick={() => setIsNewList(false)}>cansel</button>
                             </div>
                             : <h1 onClick={() => setIsNewList(true)}
-                                  style={{fontSize: '36px', cursor: 'pointer'}}
+                                  className={s.plus}
                             > ➕ </h1>
                         }
                     </div>

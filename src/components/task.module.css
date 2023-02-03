@@ -1,0 +1,26 @@
+.task {
+    margin: 5px;
+    width: 100%;
+    display: flex;
+    text-align: left;
+}
+.text {
+    width: 100%;
+    flex-grow: 1;
+    margin: 0 10px;
+}
+.isDone {
+    width: 100%;
+    flex-grow: 1;
+    margin: 0 10px;
+    text-decoration: black 1px line-through;
+}
+.cross {
+    flex-grow: 0;
+    width: 10%;
+    opacity: 20%;
+    cursor: pointer;
+}
+.cross:hover {
+    opacity: 60%;
+}

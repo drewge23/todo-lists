@@ -1,0 +1,28 @@
+.container {
+    padding: 30px;
+}
+
+.listsContainer {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.newListBtn {
+    width: 300px;
+    height: 500px;
+    border-radius: 15px;
+    background-color: lightcyan;
+    outline: 4px dotted #ff5858;
+    outline-offset: 2px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.plus {
+    fontSize: 36px;
+    cursor: pointer;
+}

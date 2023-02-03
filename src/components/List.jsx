@@ -1,74 +1,67 @@
 import React, {useState} from 'react';
 import 'firebase/compat/firestore';
-import firebase from "firebase/compat/app";
+import s from './list.module.css'
+import Task from "./Task";
 
-function List({list, deleteList, addTask, deleteTask}) {
+function List({list, deleteList, updateList, addTask, deleteTask, updateTask}) {
+    // const [tasks, setTasks] = useState(list.data().tasks)
+    //useEffect(() => {
+    // return () => {
+    // update list doc with new task array
+    //     }
+    // }
     const [newTaskName, setNewTaskName] = useState('')
+    const [isEditMode, setIsEditMode] = useState(false)
+    const [listName, setListName] = useState(list.data().name)
+
+    const taskSort = (a, b) => {
+        return a.isDone - b.isDone || a.createdAt - b.createdAt
+    }
+
     return (
-        <div>
-            <div style={{
-                width: '300px',
-                height: '500px',
-                borderRadius: '15px',
-                outline: '4px dashed blue',
-                outlineOffset: '-2px',
+        <div className={s.listContainer}>
+            <div className={s.header}>
+                {isEditMode
+                    ? <input type="text" value={listName}
+                             className={s.nameInput}
+                             onChange={(e) => setListName(e.target.value)}
+                             onKeyUp={(e) => {
+                                 if (e.key === 'Enter') {
+                                     setIsEditMode(false)
+                                     updateList(list.id, listName)
+                                 }
+                             }}/>
+                    : <h3 className={s.name}
+                          onDoubleClick={() => setIsEditMode(true)}
+                    >{list.data().name}</h3>}
+                <button onClick={() => deleteList(list.id)}
+                        className={s.racoonBtn}
+                >🦝
+                </button>
+            </div>
 
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-
-                position: 'relative'
-            }}>
-                <div style={{
-                    width: '100%',
-                    flexGrow: 0,
-                    display: 'flex',
-                }}>
-                    <h3 style={{flexGrow: 1,}}>{list.data().name}</h3>
-                    <button onClick={() => deleteList(list.id)}
-                            style={{
-                                justifySelf: 'flex-end',
-                                position: 'absolute',
-                                right: '10px',
-                                top: '10px',
-                                // border: '1px solid black'
-                            }}
-                    >🦝
-                    </button>
+            <div className={s.tasksContainer}>
+                <div>
+                    <input type="text" value={newTaskName}
+                           onChange={(e) => setNewTaskName(e.target.value)}
+                           onKeyUp={(e) => {
+                               if (e.key === 'Enter') {
+                                   addTask(newTaskName, list.id)
+                                   setNewTaskName('')
+                               }
+                           }}/>
                 </div>
-
-                <div style={{
-                    flexGrow: 1,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    backgroundColor: 'aquamarine',
-
-                    width: '100%',
-                    borderRadius: '0 0 15px 15px',
-                    // borderTop: '1px solid blue',
-                }}>
-                    <div>
-                        <input type="text" value={newTaskName}
-                               onChange={(e) => setNewTaskName(e.target.value)}
-                               onKeyUp={(e) => {
-                                   if (e.key === 'Enter') {
-                                       addTask(newTaskName, list.id)
-                                       setNewTaskName('')
-                                   }
-                               }}/>
-                    </div>
-                    {list.tasks?.length === 0
-                        ? <p>Enter your first task</p>
-                        : list.data().tasks.map((task, index) => (
-                            <div key={index}>
-                                <li>{task.task}
-                                    <button onClick={() => deleteTask(task, list.id)}> x</button>
-                                </li>
-                            </div>))}
-                </div>
+                {list.tasks?.length === 0
+                    ? <p>Enter your first task</p>
+                    : list.data().tasks
+                        .sort(taskSort)
+                        .map((task, index) => (
+                            <Task key={index}
+                                  task={task}
+                                  deleteTask={() => deleteTask(task, list.id)}
+                                  updateTask={(newTask) => updateTask(task, list.id, newTask)}
+                            />
+                        ))}
             </div>
         </div>
     );
