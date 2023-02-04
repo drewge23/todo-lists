@@ -5,6 +5,16 @@ function Task({task, deleteTask, updateTask}) {
     const [isEditMode, setIsEditMode] = useState(false)
     const [taskName, setTaskName] = useState(task.task)
 
+    const updateTaskName = () => {
+        const newTask = {
+            task: taskName,
+            isDone: task.isDone,
+            createdAt: task.createdAt
+        }
+        updateTask(newTask)
+        setIsEditMode(false)
+    }
+
     return (<div className={s.task}>
         <input type="checkbox" checked={task.isDone}
                onChange={(e) => {
@@ -16,18 +26,15 @@ function Task({task, deleteTask, updateTask}) {
                    updateTask(newTask)
                }}/>
         {isEditMode
-            ? <input type="text" value={taskName}
+            ? <input type="text" value={taskName} autoFocus
                      className={s.text}
                      onChange={(e) => setTaskName(e.target.value)}
+                     onBlur={() => {
+                         updateTaskName()
+                     }}
                      onKeyUp={(e) => {
                          if (e.key === 'Enter') {
-                             const newTask = {
-                                 task: taskName,
-                                 isDone: task.isDone,
-                                 createdAt: task.createdAt
-                             }
-                             updateTask(newTask)
-                             setIsEditMode(false)
+                             updateTaskName()
                          }
                      }}/>
             : <span className={task.isDone ? s.isDone : s.text} onDoubleClick={() => setIsEditMode(true)}>

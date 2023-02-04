@@ -22,13 +22,17 @@ function List({list, deleteList, updateList, addTask, deleteTask, updateTask}) {
         <div className={s.listContainer}>
             <div className={s.header}>
                 {isEditMode
-                    ? <input type="text" value={listName}
+                    ? <input type="text" value={listName} autoFocus
                              className={s.nameInput}
                              onChange={(e) => setListName(e.target.value)}
+                             onBlur={() => {
+                                 updateList(list.id, listName)
+                                 setIsEditMode(false)
+                             }}
                              onKeyUp={(e) => {
                                  if (e.key === 'Enter') {
-                                     setIsEditMode(false)
                                      updateList(list.id, listName)
+                                     setIsEditMode(false)
                                  }
                              }}/>
                     : <h3 className={s.name}
