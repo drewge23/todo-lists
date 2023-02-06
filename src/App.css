@@ -1,18 +1,27 @@
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 button {
-  padding: 0.5em;
-  border: 0px solid transparent;
-  border-radius: 5px;
-  font-size: 1.25em;
-  background-color: rgba(192,0,0,0.2);
-  cursor: pointer;
+    padding: 0.5em;
+    border: 0px solid transparent;
+    border-radius: 5px;
+    font-size: 1.25em;
+    background-color: rgba(192, 0, 0, 0.2);
+    cursor: pointer;
 }
+
 button:hover {
-  background-color: rgba(192,0,0,0.3);
+    background-color: rgba(192, 0, 0, 0.3);
+}
+input {
+    width: 90%;
+    /*height: 25px;*/
+    border: 0px solid transparent;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 1.5em;
 }
 .App {
-  text-align: center;
+    text-align: center;
 }

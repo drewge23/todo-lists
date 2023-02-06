@@ -4,15 +4,36 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    margin-bottom: 20px;
 }
 
 .header {
     padding: 0px 70px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     background-color: #f0c36d;
 }
-
+.greating {
+    display: flex;
+    gap: 20px;
+}
+.profilePic {
+    width: 50px;
+    margin: 10px;
+    border-radius: 25px;
+    outline: 3px solid #7979d7;
+}
+.signOutBtn {
+    height: 50%;
+    padding: 0.5em;
+    background-color: rgba(255, 255, 255, 0.5);
+    outline: 3px solid #7979d7;
+}
+.signOutBtn:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+}
 .listsContainer {
     margin: 0 auto;
     display: flex;
@@ -25,16 +46,42 @@
     width: 300px;
     height: 500px;
     border-radius: 15px;
-    background-color: lightcyan;
-    outline: 4px dotted #ff5858;
-    outline-offset: 2px;
+    background-color: #b8b8d5;
+    outline: 8px dashed #eeb850;
+    outline-offset: -4px;
 
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
 .plus {
-    fontSize: 36px;
+    font-size: 5em;
     cursor: pointer;
+}
+.newList {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+.label {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.buttons {
+    display: flex;
+    gap: 20px;
+}
+.confirmBtn {
+    background-color: #fff;
+}
+.confirmBtn:hover {
+    background-color: greenyellow;
+}
+.cancelBtn {
+    background-color: #fff;
+}
+.cancelBtn:hover {
+    background-color: palevioletred;
 }

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import s from './task.module.css'
 
 function Task({task, deleteTask, updateTask}) {
@@ -15,35 +15,42 @@ function Task({task, deleteTask, updateTask}) {
         setIsEditMode(false)
     }
 
-    return (<div className={s.task}>
-        <input type="checkbox" checked={task.isDone}
-               onChange={(e) => {
-                   const newTask = {
-                       task: task.task,
-                       isDone: e.target.checked,
-                       createdAt: task.createdAt
-                   }
-                   updateTask(newTask)
-               }}/>
-        {isEditMode
-            ? <input type="text" value={taskName} autoFocus
-                     className={s.text}
-                     onChange={(e) => setTaskName(e.target.value)}
-                     onBlur={() => {
-                         updateTaskName()
-                     }}
-                     onKeyUp={(e) => {
-                         if (e.key === 'Enter') {
+    useEffect(() => {
+        setTaskName(task.task)
+    }, [])
+
+    return (
+        <div className={s.task}>
+            <input type="checkbox" checked={task.isDone}
+                   className={s.checkbox}
+                   onChange={(e) => {
+                       const newTask = {
+                           task: task.task,
+                           isDone: e.target.checked,
+                           createdAt: task.createdAt
+                       }
+                       updateTask(newTask)
+                   }}/>
+            {isEditMode
+                ? <input type="text" value={taskName} autoFocus
+                         className={s.textInput}
+                         onChange={(e) => setTaskName(e.target.value)}
+                         onBlur={() => {
                              updateTaskName()
-                         }
-                     }}/>
-            : <span className={task.isDone ? s.isDone : s.text} onDoubleClick={() => setIsEditMode(true)}>
+                         }}
+                         onKeyUp={(e) => {
+                             if (e.key === 'Enter') {
+                                 updateTaskName()
+                             }
+                         }}/>
+                : <span className={task.isDone ? s.isDone : s.text} onDoubleClick={() => setIsEditMode(true)}>
                 {task.task}
             </span>}
-        <span onClick={deleteTask} className={s.cross}>
-                ❌
+            <span onClick={deleteTask} className={s.cross}>
+                🗑️
             </span>
-    </div>);
+        </div>
+    )
 }
 
 export default Task;

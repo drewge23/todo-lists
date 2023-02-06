@@ -93,11 +93,8 @@ function MainScreen({app}) {
             result.source.index,
             result.destination.index
         )
-
         lists.docs
             .map((list, i) => {
-                console.log(list.data().index + ' ' + list.data().name)
-                console.log(newIndexes[i])
                 if (list.data().index !== newIndexes[i]) {
                     db.collection("lists").doc(list.id).update({index: newIndexes[i]})
                         .then(() => console.log(list.data().index + ' ' + list.data().name))
@@ -115,15 +112,20 @@ function MainScreen({app}) {
     return (
         <>
             <div className={s.header}>
-                <h3 className={s.greating}>Hi, {auth.currentUser.displayName}!</h3>
-                <button className={s.signOut} onClick={() => auth.signOut()}>
+                <div className={s.greating}>
+                    {auth.currentUser.photoURL &&
+                        <img referrerPolicy="no-referrer" className={s.profilePic}
+                             src={auth.currentUser.photoURL} alt="sign in"/>}
+                    <h3>Hi, {auth.currentUser.displayName}!</h3>
+                </div>
+                <button className={s.signOutBtn} onClick={() => auth.signOut()}>
                     Sign out
                 </button>
             </div>
             <div className={s.container}>
-                {auth.currentUser.photoURL &&
-                    <img referrerPolicy="no-referrer" src={auth.currentUser.photoURL} alt="sign in"/>}
-                <h2>Add a new task-list!</h2>
+                <h2>
+                    {lists && lists.docs.length > 0 ? 'Your task-lists:' : 'Add your first task-list!'}
+                </h2>
 
                 {/*DRAG AND DROP*/}
                 <DragDropContext onDragEnd={onDragEnd}>
@@ -150,7 +152,6 @@ function MainScreen({app}) {
                                                         }
                                                     }
                                                 >
-                                                    {list.data().index}
                                                     <List list={list}
                                                           deleteList={deleteList}
                                                           updateList={updateList}
@@ -163,8 +164,8 @@ function MainScreen({app}) {
                                 {provided.placeholder}
                                 <div className={s.newListBtn}>
                                     {isNewList
-                                        ? <div>
-                                            <label htmlFor="listName">List name</label>
+                                        ? <div className={s.newList}>
+                                            <label htmlFor="listName" className={s.label}>List name</label>
                                             <input type='text' name='listName'
                                                    value={newListName}
                                                    onChange={(e) => setNewListName(e.target.value)}
@@ -172,8 +173,10 @@ function MainScreen({app}) {
                                                        if (e.key === 'Enter') addList(newListName)
                                                    }}
                                             />
-                                            <button onClick={() => addList(newListName)}>let's go!</button>
-                                            <button onClick={() => setIsNewList(false)}>cansel</button>
+                                            <div className={s.buttons}>
+                                                <button className={s.confirmBtn} onClick={() => addList(newListName)}> ✔️</button>
+                                                <button className={s.cancelBtn} onClick={() => setIsNewList(false)}>❌</button>
+                                            </div>
                                         </div>
                                         : <h1 onClick={() => setIsNewList(true)}
                                               className={s.plus}
