@@ -30,11 +30,11 @@
     font-size: 20px;
     font-weight: bold;
 }
-.racoonBtn {
+.raccoonBtn {
     justify-self: flex-end;
     position: absolute;
-    right: 10px;
-    top: 10px;
+    right: 9px;
+    top: 9px;
     /*border: 1px solid black;*/
 }
 .tasksContainer {

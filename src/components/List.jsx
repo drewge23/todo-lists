@@ -33,7 +33,7 @@ function List({list, deleteList, updateList, addTask, deleteTask, updateTask}) {
                           onDoubleClick={() => setIsEditMode(true)}
                     >{list.data().name}</h3>}
                 <button onClick={() => deleteList(list.id)}
-                        className={s.racoonBtn}
+                        className={s.raccoonBtn}
                 >🦝
                 </button>
             </div>
