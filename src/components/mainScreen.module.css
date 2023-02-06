@@ -4,36 +4,40 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-
     margin-bottom: 20px;
 }
 
 .header {
-    padding: 0px 70px;
+    padding: 0px 10vw 0px 70px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #f0c36d;
 }
+
 .greating {
     display: flex;
     gap: 20px;
 }
+
 .profilePic {
     width: 50px;
     margin: 10px;
     border-radius: 25px;
     outline: 3px solid #7979d7;
 }
+
 .signOutBtn {
     height: 50%;
     padding: 0.5em;
     background-color: rgba(255, 255, 255, 0.5);
     outline: 3px solid #7979d7;
 }
+
 .signOutBtn:hover {
     background-color: rgba(255, 255, 255, 0.7);
 }
+
 .listsContainer {
     margin: 0 auto;
     display: flex;
@@ -54,10 +58,12 @@
     justify-content: center;
     align-items: center;
 }
+
 .plus {
     font-size: 5em;
     cursor: pointer;
 }
+
 .newList {
     display: flex;
     flex-direction: column;
@@ -65,23 +71,29 @@
     align-items: center;
     gap: 20px;
 }
+
 .label {
     font-size: 1.5em;
     font-weight: bold;
 }
+
 .buttons {
     display: flex;
     gap: 20px;
 }
+
 .confirmBtn {
     background-color: #fff;
 }
+
 .confirmBtn:hover {
     background-color: greenyellow;
 }
+
 .cancelBtn {
     background-color: #fff;
 }
+
 .cancelBtn:hover {
     background-color: palevioletred;
 }

@@ -3,7 +3,7 @@
     "rules": "database.rules.json"
   },
   "hosting": {
-    "site": "todo-lists-r2d2",
+    "site": "raccoon-lists",
     "public": "build",
     "ignore": [
       "firebase.json",
