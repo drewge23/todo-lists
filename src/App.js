@@ -7,6 +7,7 @@ import 'firebase/compat/firestore';
 import {useAuthState} from "react-firebase-hooks/auth";
 import Auth from "./auth/Auth";
 import MainScreen from "./components/MainScreen";
+import ErrorBoundary from "./ErrorBoundary";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAAg4yrkWjbY_mcyIBaL97U8eJApu8Lq0M",
@@ -25,10 +26,12 @@ function App() {
     const [user] = useAuthState(auth)
 
     return (
-        <div className="App">
-            <Auth app={app} user={user}/>
-            {user && <MainScreen app={app}/>}
-        </div>
+        <ErrorBoundary>
+            <div className="App">
+                <Auth app={app} user={user}/>
+                {user && <MainScreen app={app}/>}
+            </div>
+        </ErrorBoundary>
     );
 }
 
