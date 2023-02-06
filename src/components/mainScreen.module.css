@@ -1,8 +1,20 @@
 .container {
-    padding: 30px;
+    padding: 0px 60px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.header {
+    padding: 0px 70px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #f0c36d;
 }
 
 .listsContainer {
+    margin: 0 auto;
     display: flex;
     gap: 20px;
     align-items: center;

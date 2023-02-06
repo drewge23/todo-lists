@@ -2,6 +2,17 @@
   box-sizing: border-box;
 }
 
+button {
+  padding: 0.5em;
+  border: 0px solid transparent;
+  border-radius: 5px;
+  font-size: 1.25em;
+  background-color: rgba(192,0,0,0.2);
+  cursor: pointer;
+}
+button:hover {
+  background-color: rgba(192,0,0,0.3);
+}
 .App {
   text-align: center;
 }

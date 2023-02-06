@@ -130,79 +130,81 @@ function MainScreen({app}) {
     }
 
     return (
-        <div className={s.container}>
-            <div>
-                <p>Hi, {auth.currentUser.displayName}!</p>
-                <button type="button" onClick={() => auth.signOut()}>
+        <>
+            <div className={s.header}>
+                <h3 className={s.greating}>Hi, {auth.currentUser.displayName}!</h3>
+                <button className={s.signOut} onClick={() => auth.signOut()}>
                     Sign out
                 </button>
             </div>
-            {auth.currentUser.photoURL &&
-                <img referrerPolicy="no-referrer" src={auth.currentUser.photoURL} alt="sign in"/>}
-            <h2>Add a new task-list!</h2>
-            {/*DRAG AND DROP*/}
-            <DragDropContext onDragEnd={onDragEnd}>
-                <Droppable droppableId="droppable" direction="horizontal">
-                    {(provided, snapshot) => (
-                        <div className={s.listsContainer}
-                             ref={provided.innerRef}
-                            // style={getListStyle(snapshot.isDraggingOver)}
-                             {...provided.droppableProps}
-                        >
-                            {lists && lists.docs
-                                .sort((a, b) => a.data().index - b.data().index)
-                                .map((list, index) => (
-                                    <Draggable key={list.id} draggableId={list.id} index={index}>
-                                        {(provided, snapshot) => (
-                                            <div
-                                                ref={provided.innerRef}
-                                                {...provided.draggableProps}
-                                                {...provided.dragHandleProps}
-                                                // style={{cursor: 'auto'}}
-                                                style={
-                                                    // getItemStyle(
-                                                    // snapshot.isDragging,
-                                                    {
-                                                        ...provided.draggableProps.style,
-                                                        cursor: 'auto'
+            <div className={s.container}>
+                {auth.currentUser.photoURL &&
+                    <img referrerPolicy="no-referrer" src={auth.currentUser.photoURL} alt="sign in"/>}
+                <h2>Add a new task-list!</h2>
+                {/*DRAG AND DROP*/}
+                <DragDropContext onDragEnd={onDragEnd}>
+                    <Droppable droppableId="droppable" direction="horizontal">
+                        {(provided, snapshot) => (
+                            <div className={s.listsContainer}
+                                 ref={provided.innerRef}
+                                // style={getListStyle(snapshot.isDraggingOver)}
+                                 {...provided.droppableProps}
+                            >
+                                {lists && lists.docs
+                                    .sort((a, b) => a.data().index - b.data().index)
+                                    .map((list, index) => (
+                                        <Draggable key={list.id} draggableId={list.id} index={index}>
+                                            {(provided, snapshot) => (
+                                                <div
+                                                    ref={provided.innerRef}
+                                                    {...provided.draggableProps}
+                                                    {...provided.dragHandleProps}
+                                                    // style={{cursor: 'auto'}}
+                                                    style={
+                                                        // getItemStyle(
+                                                        // snapshot.isDragging,
+                                                        {
+                                                            ...provided.draggableProps.style,
+                                                            cursor: 'auto'
+                                                        }
+                                                        // )
                                                     }
-                                                    // )
-                                                }
-                                            >
-                                                {list.data().index}
-                                                <List list={list}
-                                                      deleteList={deleteList}
-                                                      updateList={updateList}
-                                                      addTask={addTask}
-                                                      deleteTask={deleteTask}
-                                                      updateTask={updateTask}
-                                                />
-                                            </div>)}
-                                    </Draggable>))}
-                            {provided.placeholder}
-                            <div className={s.newListBtn}>
-                                {isNewList
-                                    ? <div>
-                                        <label htmlFor="listName">List name</label>
-                                        <input type='text' name='listName'
-                                               value={newListName}
-                                               onChange={(e) => setNewListName(e.target.value)}
-                                               onKeyUp={(e) => {
-                                                   if (e.key === 'Enter') addList(newListName)
-                                               }}
-                                        />
-                                        <button onClick={() => addList(newListName)}>let's go!</button>
-                                        <button onClick={() => setIsNewList(false)}>cansel</button>
-                                    </div>
-                                    : <h1 onClick={() => setIsNewList(true)}
-                                          className={s.plus}
-                                    > ➕ </h1>
-                                }
-                            </div>
-                        </div>)}
-                </Droppable>
-            </DragDropContext>
-        </div>
+                                                >
+                                                    {list.data().index}
+                                                    <List list={list}
+                                                          deleteList={deleteList}
+                                                          updateList={updateList}
+                                                          addTask={addTask}
+                                                          deleteTask={deleteTask}
+                                                          updateTask={updateTask}
+                                                    />
+                                                </div>)}
+                                        </Draggable>))}
+                                {provided.placeholder}
+                                <div className={s.newListBtn}>
+                                    {isNewList
+                                        ? <div>
+                                            <label htmlFor="listName">List name</label>
+                                            <input type='text' name='listName'
+                                                   value={newListName}
+                                                   onChange={(e) => setNewListName(e.target.value)}
+                                                   onKeyUp={(e) => {
+                                                       if (e.key === 'Enter') addList(newListName)
+                                                   }}
+                                            />
+                                            <button onClick={() => addList(newListName)}>let's go!</button>
+                                            <button onClick={() => setIsNewList(false)}>cansel</button>
+                                        </div>
+                                        : <h1 onClick={() => setIsNewList(true)}
+                                              className={s.plus}
+                                        > ➕ </h1>
+                                    }
+                                </div>
+                            </div>)}
+                    </Droppable>
+                </DragDropContext>
+            </div>
+        </>
     )
         ;
 }
