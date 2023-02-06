@@ -8,6 +8,7 @@ import {useAuthState} from "react-firebase-hooks/auth";
 import Auth from "./auth/Auth";
 import MainScreen from "./components/MainScreen";
 import ErrorBoundary from "./ErrorBoundary";
+import React from "react";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAAg4yrkWjbY_mcyIBaL97U8eJApu8Lq0M",
@@ -18,7 +19,6 @@ const firebaseConfig = {
     appId: "1:622002488770:web:d36c9b9c9caff82ec5c25b",
     measurementId: "G-5LVS8YGBD5"
 };
-
 const app = firebase.initializeApp(firebaseConfig);
 
 function App() {
