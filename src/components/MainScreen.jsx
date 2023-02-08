@@ -14,11 +14,11 @@ function MainScreen({app}) {
     const db = firebase.firestore(app)
 
     const listsRef = db.collection('lists')
-    // const query = listsRef.where('uid', '==', auth.currentUser.uid)
-    // const sortByIndex = (a, b) => {
-    //     return a.data().index - b.data().index
-    // }
-    const query = listsRef.orderBy('index', 'asc')
+    const query = listsRef.where('uid', '==', auth.currentUser.uid)
+    const sortByIndex = (a, b) => {
+        return a.data().index - b.data().index
+    }
+    // const query = listsRef.orderBy('index', 'asc')
     const [lists] = useCollection(query, {idField: 'id'})
 
     const [isNewList, setIsNewList] = useState(false)
@@ -37,7 +37,6 @@ function MainScreen({app}) {
                 name: listName,
                 tasks: [],
             })
-                .then(() => console.log('success!'))
 
             setNewListName('')
             setMaxIndex(maxIndex + 1)
@@ -87,17 +86,17 @@ function MainScreen({app}) {
     //dnd
     const onDragEnd = (result) => {
         if (!result.destination) return
-        const oldIndexes = lists.docs.map(list => list.data().index)
+        const oldIndexes = lists.docs.sort(sortByIndex).map(list => list.data().index)
         const newIndexes = reorder(
             oldIndexes,
             result.source.index,
             result.destination.index
         )
         lists.docs
+            .sort(sortByIndex)
             .map((list, i) => {
                 if (list.data().index !== newIndexes[i]) {
                     db.collection("lists").doc(list.id).update({index: newIndexes[i]})
-                        .then(() => console.log(list.data().index + ' ' + list.data().name))
                 }
                 return null
             })
@@ -137,6 +136,7 @@ function MainScreen({app}) {
                                  {...provided.droppableProps}
                             >
                                 {lists && lists.docs
+                                    .sort(sortByIndex)
                                     .map((list, index) => (
                                         <Draggable key={list.id} draggableId={list.id} index={index}>
                                             {(provided, snapshot) => (
